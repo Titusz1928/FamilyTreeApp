@@ -1,0 +1,13 @@
+<mat-toolbar class="top-toolbar">
+  <span>Family Tree App</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button *ngIf="!canEdit" (click)="openLoginDialog()" class="edit-icon" aria-label="Edit icon">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <button mat-icon-button *ngIf="canEdit" (click)="saveData()" class="edit-icon" aria-label="Edit icon">
+    <mat-icon>check</mat-icon>
+  </button>
+  <button mat-icon-button (click)="openInfoDialog()" class="info-icon" aria-label="Info icon">
+    <mat-icon>info</mat-icon>
+  </button>
+</mat-toolbar>

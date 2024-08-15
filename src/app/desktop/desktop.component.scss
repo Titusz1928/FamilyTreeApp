@@ -1,0 +1,183 @@
+.mat-tab-group, .mat-tab {
+  width: 100%;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto; /* Allows horizontal scrolling if needed */
+}
+
+.mat-elevation-z8 {
+  width: 100%;
+  min-width: 100%;
+}
+
+.mat-header-cell, .mat-cell {
+  padding: 16px; /* Adjust padding as needed */
+  text-align: left; /* Ensure text is aligned to the left */
+  min-width: 120px; /* Prevent cells from being too small */
+}
+
+.mat-header-row, .mat-row {
+  width: 100%;
+}
+
+.mat-header-cell, .mat-cell {
+  flex: 1 1 auto; /* Flex properties to allow proper expansion */
+  word-wrap: break-word; /* Handle long text properly */
+}
+
+
+
+/* Flexbox container for horizontal alignment */
+.horizontal-layout {
+  display: flex;
+  align-items: center; /* Vertically center-align the items */
+  gap: 20px; /* Space between items */
+  justify-content: flex-start; /* Align items to the start */
+}
+
+/* Adjust label to align with other elements */
+.expansion-panel-label {
+  margin-right: 20px;
+  font-weight: bold;
+}
+
+/* Ensure the slider takes up the remaining space */
+.slider-container {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+}
+
+/* Ensure buttons have consistent spacing */
+.button-container, .button-primary {
+  margin-left: 20px;
+}
+
+/* Media query to handle smaller screens (mobile devices) */
+@media screen and (max-width: 768px) {
+  .horizontal-layout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px; /* Adjust gap for vertical layout */
+  }
+
+  .button-container, .button-primary {
+    margin-left: 0;
+    margin-top: 10px; /* Add space between buttons when stacked vertically */
+  }
+
+  .slider-container {
+    width: 100%; /* Ensure slider takes full width */
+  }
+}
+
+
+.slider-value-label {
+  margin-right: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #000; /* Black text color */
+}
+
+/* Button container for alignment */
+.button-container {
+  margin-top: 20px;
+}
+
+/* Button styling */
+.button-primary {
+  background-color: blue;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-primary mat-icon {
+  margin-right: 5px;
+}
+
+.button-add-person {
+  background-color: green;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.button-add-person:hover {
+  background-color: darkgreen;
+}
+
+/* Override Angular Material slider colors */
+::ng-deep .mat-slider-track-fill {
+  background-color: blue !important;
+}
+
+::ng-deep .mat-slider-thumb {
+  background-color: blue !important;
+}
+
+::ng-deep .mat-slider-thumb-label {
+  background-color: blue !important;
+  color: white !important;
+}
+
+::ng-deep .mat-slider-ticks {
+  background-color: blue !important;
+}
+
+::ng-deep .mat-slider-thumb-label-text {
+  color: white !important;
+}
+
+::ng-deep .mat-slider-track-background {
+  background-color: rgba(0, 0, 255, 0.3) !important;
+}
+
+::ng-deep .mat-slider-ripple {
+  background-color: rgba(0, 0, 255, 0.3) !important;
+}
+
+
+/* ScrollableCardComponent.scss */
+.scrollable-card {
+  display: flex;
+  height: 100px; /* Fixed height */
+  overflow: auto; /* Enable scrolling */
+  border: 1px solid #0d6efd;
+}
+
+.scrollable-content {
+  height: 100%; /* Ensure content takes full height */
+  padding: 16px; /* Optional padding for content */
+  box-sizing: border-box;
+}
+
+.scrollable-container {
+  width: 100%; /* Full width or specify a fixed width */
+  height: 600px; /* Or any desired height */
+  overflow: auto; /* Enables both horizontal and vertical scrolling */
+  position: relative; /* Ensure the container is properly positioned */
+  border: 1px solid #ccc; /* Optional: Add border for visual separation */
+  background-color: #ffffff; /* Optional: Background color for better visibility */
+}
+
+.mat-tab-group{
+  margin-top: 40px;
+}
+
+.year_display{
+  margin:15px;
+}
+
+.edit-expansion-panel{
+  margin-bottom: 40px;
+}
+

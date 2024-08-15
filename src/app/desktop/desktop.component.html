@@ -1,0 +1,150 @@
+   
+    <!-- <div *ngIf="rootPerson; else noRootPerson">
+      <ftapp-person-card [person]="rootPerson"></ftapp-person-card>
+    </div>
+        
+    <ng-template #noRootPerson>
+      <p>No root person found.</p>
+    </ng-template> -->
+
+    <!-- Ensure people is bound properly -->
+    <mat-tab-group>
+      <mat-tab label="Tree"> 
+
+        <mat-accordion class="example-headers-align" multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header> 
+              <mat-panel-title> 
+                See tree animation <mat-icon>access_time</mat-icon>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <hr>
+            <div class="expansion-panel-content horizontal-layout">
+              <p class="expansion-panel-label">Set years/second</p>
+
+              <div class="slider-container">
+                <label class="slider-value-label">{{slider_value}}</label>
+                <mat-slider
+                  class="example-margin"
+                  [disabled]="slider_disabled"
+                  [max]="slider_max"
+                  [min]="slider_min"
+                  [step]="slider_step"
+                  [(ngModel)]="slider_value"
+                ></mat-slider>
+              </div>
+
+                <button class="button button-primary" (click)="loadTree(this.slider_value)">
+                  <mat-icon>play_arrow</mat-icon> Start Animation
+                </button>
+
+              <button class="button button-primary" (click)="stopLoading()">
+                <mat-icon>stop</mat-icon> Stop
+              </button>
+
+              <button class="button button-primary" (click)="revertLoading()">
+                <mat-icon>restore</mat-icon> Restore
+              </button>
+            </div>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <h2 class="year_display">{{ displayedYear }}</h2>
+        <hr>
+        <!-- ScrollableCardComponent.html -->
+        <mat-card class="scrollable-card" #scrollableCard>
+          <mat-card-content class="scrollable-content">
+            <p *ngFor="let message of messages">{{ message }}</p>
+          </mat-card-content>
+        </mat-card>
+
+        <div class="scrollable-container">
+          <ftapp-tree-area [birthEvents]="birthEvents"></ftapp-tree-area>
+        </div>
+
+      </mat-tab>
+
+
+    <mat-tab label="Table">
+        <table mat-table [dataSource]="people" class="table-container">
+      
+      
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let person">{{person.name}}</td>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="id_person">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let person">{{person.id_person}}</td>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="id_father">
+        <th mat-header-cell *matHeaderCellDef>Father ID</th>
+        <td mat-cell *matCellDef="let person">{{person.id_father}}</td>
+      </ng-container>
+  
+     
+      <ng-container matColumnDef="id_mother">
+        <th mat-header-cell *matHeaderCellDef>Mother ID</th>
+        <td mat-cell *matCellDef="let person">{{person.id_mother}}</td>
+      </ng-container>
+  
+    
+      <ng-container matColumnDef="id_partner">
+        <th mat-header-cell *matHeaderCellDef>Partner ID</th>
+        <td mat-cell *matCellDef="let person">{{person.id_partner}}</td>
+      </ng-container>
+  
+      
+      <ng-container matColumnDef="birtyear">
+        <th mat-header-cell *matHeaderCellDef>Birth Year</th>
+        <td mat-cell *matCellDef="let person">{{person.birtyear}}</td>
+      </ng-container>
+  
+  
+      <ng-container matColumnDef="deathyear">
+        <th mat-header-cell *matHeaderCellDef>Death Year</th>
+        <td mat-cell *matCellDef="let person">{{person.deathyear}}</td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="['name', 'id_person', 'id_father', 'id_mother', 'id_partner', 'birtyear', 'deathyear']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['name', 'id_person', 'id_father', 'id_mother', 'id_partner', 'birtyear', 'deathyear'];"></tr>
+    </table>
+
+    
+    
+    <!-- <div *ngIf="people.length > 0">
+      <p *ngFor="let person of people">
+        Debug: {{ person.name }} ({{ person.birthyear }} - {{ person.deathyear }})
+      </p>
+      <ftapp-person-card *ngFor="let person of people" [person]="person"></ftapp-person-card>
+    </div>
+  -->
+    </mat-tab>
+
+    <!-- <mat-tab label="Tree">
+      <div class="scrollable-container">
+        <svg id="barChart" width="800" height="500"></svg>
+      </div>
+    </mat-tab> -->
+
+    </mat-tab-group>
+
+ <div *ngIf="canEdit" class="edit-expansion-panel">
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title> 
+          Edit data <mat-icon>edit</mat-icon>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <button class="button button-primary" (click)="addPerson()">Add person</button>
+    </mat-expansion-panel>
+  </mat-accordion>
+  </div>
+    
+  
