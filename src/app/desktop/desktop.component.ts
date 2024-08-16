@@ -4,16 +4,6 @@ import { SupabaseService } from '../services/supabase.service';
 import { Person } from './person';
 import { MatAccordion } from '@angular/material/expansion';
 
-export interface BirthEvent {
-  name: string;
-  birthyear: number;
-  xOffset: number;
-  id_person: number;
-  id_partner?: number;
-  id_father?: number; // Optional unique identifier for the father
-  id_mother?: number; // Optional unique identifier for the mother
-}
-
 @Component({
   selector: 'ftapp-desktop',
   templateUrl: './desktop.component.html',
@@ -23,9 +13,57 @@ export class DesktopComponent implements OnInit {
   canEdit: boolean = false;
   people: Person[] = [];
   bornThisYear: { person: Person, top: number, left: number }[] = [];
-  couples: { person1: Person, person2: Person, top1: number, left1: number, top2: number, left2: number }[] = [];
 
-  rootPerson: Person | null = null;
+  treeData = [{
+    "name": "Niclas Superlongsurname",
+    "class": "man",
+    "textClass": "emphasis",
+    "marriages": [{
+      "spouse": {
+        "name": "Iliana",
+        "class": "woman",
+        "extra": {
+          "nickname": "Illi"
+        }
+      },
+      "children": [{
+        "name": "James",
+        "class": "man",
+        "marriages": [{
+          "spouse": {
+            "name": "Alexandra",
+            "class": "woman"
+          },
+          "children": [{
+            "name": "Eric",
+            "class": "man",
+            "marriages": [{
+              "spouse": {
+                "name": "Eva",
+                "class": "woman"
+              }
+            }]
+          }, {
+            "name": "Jane",
+            "class": "woman"
+          }, {
+            "name": "Jasper",
+            "class": "man"
+          }, {
+            "name": "Emma",
+            "class": "woman"
+          }, {
+            "name": "Julia",
+            "class": "woman"
+          }, {
+            "name": "Jessica",
+            "class": "woman"
+          }]
+        }]
+      }]
+    }]
+  }];
+
 
   oldestYear: number = 1800;
   displayedYear: number = 0;
@@ -115,13 +153,13 @@ export class DesktopComponent implements OnInit {
     }
   }
 
-  birthEvents: BirthEvent[] = [];
+  birthEvents: { name: string, birthyear: number }[] = [];
 
   loadTree(loadSpeed: number): void {
     this.messages = [];
     this.displayedYear = this.oldestYear;
     this.birthEvents = [];
-  
+    
     if (this.intervalId) {
       return;
     }
@@ -130,70 +168,26 @@ export class DesktopComponent implements OnInit {
       if (this.displayedYear >= new Date().getFullYear()) {
         this.stopLoading();
       } else {
-        // Process birth events
         for (let person of this.people) {
           if (this.displayedYear === person.birthyear) {
             this.messages.push(`${person.name} was born (${this.displayedYear})`);
             
-            this.birthEvents = [...this.birthEvents, { name: person.name, birthyear: person.birthyear, xOffset: 0, id_person: person.id_person }];
+            // Instead of just pushing, create a new array reference
+            this.birthEvents = [...this.birthEvents, { name: person.name, birthyear: person.birthyear }];
           }
   
-          // Handle marriage events
           if (this.displayedYear === person.weddingyear) {
             const partner = this.people.find(p => p.id_person === person.id_partner);
             if (partner) {
-              this.messages.push(`${person.name} got married to ${partner.name} (${this.displayedYear})`);
-  
-              const personIndex = this.birthEvents.findIndex(e => e.name === person.name);
-              const partnerIndex = this.birthEvents.findIndex(e => e.name === partner.name);
-  
-              if (personIndex !== -1 && partnerIndex !== -1) {
-                const closerDistance = 5;
-                this.birthEvents = this.birthEvents.map((event, index) => {
-                  if (index === personIndex) {
-                    return { ...event, xOffset: -closerDistance, id_person: event.id_person, id_partner: partner.id_person };
-                  } else if (index === partnerIndex) {
-                    return { ...event, xOffset: closerDistance, id_person: event.id_person, id_partner: person.id_person };
-                  }
-                  return event;
-                });
-              }
+              this.messages.push(`${person.name} got married with ${partner.name} (${this.displayedYear})`);
             }
           }
         }
-  
-        // Handle parent-child relationships
-        for (let person of this.people) {
-          if (this.displayedYear === person.birthyear) {
-            if (person.id_father) {
-              const father = this.people.find(p => p.id_person === person.id_father);
-              if (father) {
-                this.birthEvents = this.birthEvents.map(event => 
-                  event.id_person === person.id_person ? { ...event, id_father: father.id_person } : event
-                );
-              }
-            }
-  
-            if (person.id_mother) {
-              const mother = this.people.find(p => p.id_person === person.id_mother);
-              if (mother) {
-                this.birthEvents = this.birthEvents.map(event => 
-                  event.id_person === person.id_person ? { ...event, id_mother: mother.id_person } : event
-                );
-              }
-            }
-          }
-        }
-  
         this.displayedYear++;
-        this.cdr.detectChanges();
+        this.cdr.detectChanges(); // Update the view
       }
     }, 1000 / loadSpeed);
   }
-  
-
-
-  
   
 
   stopLoading(): void {
